@@ -5,6 +5,8 @@ import path from 'path';
 
 const server = express();
 
+server.use(express.urlencoded({ extended: true }));
+
 // setup view engine settings
 server.set("view engine", "ejs");
 // path of our views
@@ -15,7 +17,8 @@ server.use(ejsLayouts);
 // create an instance of ProductController
 const productController = new ProductController();
 server.get('/', (productController.getProducts));
-
+server.get('/new', productController.getAddForm);
+server.post('/', productController.addnewProduct);
 server.use(express.static('src/views'));
 
 server.listen(3400);
