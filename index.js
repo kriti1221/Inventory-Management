@@ -5,6 +5,7 @@ import path from 'path';
 import validationMiddleware from './src/middlewares/validation.middleware.js';
 import { uploadFile } from './src/middlewares/file-upload.middleware.js';
 
+
 const app = express();
 
 app.use(express.static('public'));
@@ -46,6 +47,7 @@ app.post(
 
 app.post(
     '/update-product',
+    // updateFile.single('imageUrl'),
     productsController.postUpdateProduct
 );
 
