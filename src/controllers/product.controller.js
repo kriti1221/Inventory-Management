@@ -3,11 +3,12 @@ import ProductModel from '../models/product.model.js';
 class ProductsController {
     getProducts(req, res, next) {
         var products = ProductModel.getAll();
-        res.render('index', { products });
+        res.render('index', { products, userEmail: req.session.userEmail });
     }
 
     getAddProduct(req, res, next) {
         res.render('new-product', {
+            userEmail: req.session.userEmail,
             errorMessage: null,
         });
     }
@@ -18,7 +19,10 @@ class ProductsController {
             'images/' + req.file.filename;
         ProductModel.add(name, desc, price, imageUrl);
         var products = ProductModel.getAll();
-        res.render('index', { products });
+        res.render('index', {
+            products,
+            userEmail: req.session.userEmail
+        });
     }
 
     getUpdateProductView(req, res, next) {
@@ -27,6 +31,7 @@ class ProductsController {
         const productFound = ProductModel.getById(id);
         if (productFound) {
             res.render('update-product', {
+                userEmail: req.session.userEmail,
                 product: productFound,
                 errorMessage: null,
             });
@@ -40,7 +45,10 @@ class ProductsController {
     postUpdateProduct(req, res) {
         ProductModel.update(req.body);
         var products = ProductModel.getAll();
-        res.render('index', { products });
+        res.render('index', {
+            userEmail: req.session.userEmail,
+            products
+        });
     }
 
     deleteProduct(req, res) {
@@ -53,7 +61,10 @@ class ProductsController {
         }
         ProductModel.delete(id);
         var products = ProductModel.getAll();
-        res.render('index', { products });
+        res.render('index', {
+            products,
+            userEmail: req.session.userEmail
+        });
     }
 }
 

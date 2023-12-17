@@ -39,6 +39,7 @@ app.post(
     usersController.postRegister
 );
 app.get('/', auth, productsController.getProducts);
+app.get('/logout', usersController.logout);
 app.get(
     '/add-product', auth,
     productsController.getAddProduct
